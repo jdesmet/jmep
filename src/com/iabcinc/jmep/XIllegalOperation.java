@@ -32,9 +32,10 @@ import com.iabcinc.jmep.tokens.Token;
  * @author Jo Desmet
  */
 public class XIllegalOperation extends XExpression {
-  private Token m_oToken;
-  private Object m_oValue1;
-  private Object m_oValue2;
+  private static final long serialVersionUID = 1L;
+  @SuppressWarnings("unused") private Token m_oToken;
+  @SuppressWarnings("unused") private Object m_oValue1;
+  @SuppressWarnings("unused") private Object m_oValue2;
   
 
   /*

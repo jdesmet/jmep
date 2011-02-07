@@ -25,7 +25,7 @@
 package com.iabcinc.jmep;
 
 /**
- * This is the base class for all exceptions that can occure using the
+ * This is the base class for all exceptions that can occur using the
  * Expression Class.
  * @author Jo Desmet
  * @see com.iabcinc.jmep.Expression
@@ -36,6 +36,7 @@ package com.iabcinc.jmep;
  * @see com.iabcinc.jmep.XUndefinedUnit
  */
 public class XExpression extends Exception {
+  private static final long serialVersionUID = 1L;
   private int m_iPosition;
 
   /*
