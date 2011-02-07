@@ -33,7 +33,12 @@ package com.iabcinc.jmep;
  * @see com.iabcinc.jmep.XExpression
  */
 public class XIllegalStatus extends XExpression {
-  public XIllegalStatus(int iPosition) {
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+public XIllegalStatus(int iPosition) {
     super(iPosition,"Internal error, please contact NeemSoft");
   }
   

@@ -4,7 +4,6 @@ import com.iabcinc.jmep.hooks.Unit;
 import com.iabcinc.jmep.hooks.Variable;
 import com.iabcinc.jmep.hooks.Function;
 import java.io.*;
-import com.iabcinc.jmep.*;
 
 /*
  * This is an example that uses the jmep mathematical parser. It is a command line only

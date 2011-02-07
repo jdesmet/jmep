@@ -29,6 +29,7 @@ package com.iabcinc.jmep;
  * @see com.iabcinc.jmep.XExpression
  */
 public class XUndefinedVariable extends XExpression {
+  private static final long serialVersionUID = 1L;
   private String m_sName;
 
   /*
