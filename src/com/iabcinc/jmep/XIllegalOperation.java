@@ -33,18 +33,25 @@ import com.iabcinc.jmep.tokens.Token;
  */
 public class XIllegalOperation extends XExpression {
   private static final long serialVersionUID = 1L;
-  @SuppressWarnings("unused") private Token m_oToken;
+  @SuppressWarnings("unused") private Token token;
   @SuppressWarnings("unused") private Object m_oValue1;
   @SuppressWarnings("unused") private Object m_oValue2;
   
 
+  public XIllegalOperation(Token token) { 
+	super(token.getPosition(),"Illegal operation");
+	this.token = token;
+	m_oValue1 = null;
+	m_oValue2 = null;
+  }
+ 
   /*
    * NOTE: The constructor should not defined public as it should only
    * be used within the package.
    */
-  public XIllegalOperation(Token oToken,Object oValue) {
-    super(oToken.getPosition(),"Illegal operation");
-    m_oToken = oToken;
+  public XIllegalOperation(Token token,Object oValue) {
+    super(token.getPosition(),"Illegal operation");
+    this.token = token;
     m_oValue1 = oValue;
     m_oValue2 = null;
   }
@@ -53,9 +60,9 @@ public class XIllegalOperation extends XExpression {
    * NOTE: The constructor should not defined public as it should only
    * be used within the package.
    */
-  public XIllegalOperation(Token oToken,Object oValue1,Object oValue2) {
-    super(oToken.getPosition(),"Illegal operation");
-    m_oToken = oToken;
+  public XIllegalOperation(Token token,Object oValue1,Object oValue2) {
+    super(token.getPosition(),"Illegal operation");
+    this.token = token;
     m_oValue1 = oValue1;
     m_oValue2 = oValue2;
   }
