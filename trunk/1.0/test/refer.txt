@@ -1,0 +1,4 @@
+Integer:22
+Double:38.00
+EXCEPTION:XIllegalOperationERROR(@8): Illegal operation
+Integer:1
