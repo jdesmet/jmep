@@ -49,12 +49,12 @@ public class UNAToken extends Token {
 
   public Object evaluate(Object oValue)
   throws XIllegalOperation,XIllegalStatus {
-    if (oValue instanceof Integer) {
+    if (oValue instanceof Long) {
       switch (m_kUNAToken) {
         case PLS: return oValue;
-        case MIN: return new Integer(-((Integer)oValue).intValue());
-        case NOT: return new Integer(((Integer)oValue).intValue() == 0 ? 1:0);
-        case INV: return new Integer(~((Integer)oValue).intValue());
+        case MIN: return new Long(-((Long)oValue).intValue());
+        case NOT: return new Long(((Long)oValue).intValue() == 0 ? 1:0);
+        case INV: return new Long(~((Long)oValue).intValue());
         default: throw new XIllegalStatus(getPosition());
       }
     }
