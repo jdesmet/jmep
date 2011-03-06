@@ -32,7 +32,9 @@ public class CLJMEP {
           if (oValue instanceof Double)
             return new Double(0.001*((Double)oValue).doubleValue());
           if (oValue instanceof Integer)
-            return new Double(0.001*((Integer)oValue).intValue());
+              return new Double(0.001*((Integer)oValue).intValue());
+          if (oValue instanceof Long)
+              return new Double(0.001*((Long)oValue).longValue());
           return null;
         }
       }
