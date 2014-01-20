@@ -21,31 +21,29 @@
  * 
  */
 
-package com.iabcinc.jmep;
+
+package com.googlecode.jmep;
 
 /**
- * This is an exception that occurs on access of an Undefined Function.
+ * This is an exception that should never occur. Whenever an exception
+ * like this occurs, it would general mean that there is a problem in the
+ * program. If any of those exceptions occur, then please contact NeemSoft
+ * with the expression string on which it has occurred.
  * @author Jo Desmet
  * @see com.iabcinc.jmep.XExpression
  */
-public class XUndefinedFunction extends XExpression {
-  private static final long serialVersionUID = 1L;
-  private String m_sName;
-
-  /*
-   * NOTE: The constructor should not defined public as it should only
-   * be used within the package.
-   */
-  public XUndefinedFunction(int iPosition,String sName) {
-    super(iPosition,"Undefined Function: " + sName);
-    m_sName = sName;
-  }
-
+public class XIllegalStatus extends XExpression {
   /**
-   * Gets the name of the Undefined Function.
-   * @return the name of the Undefined Function.
-   */
-  public String getFunctionName() {
-    return m_sName;
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+public XIllegalStatus(int iPosition) {
+    super(iPosition,"Internal error, please contact NeemSoft");
+  }
+  
+  public XIllegalStatus() {
+    super (-1,"Internal error, please contact NeemSoft");
   }
 }
+

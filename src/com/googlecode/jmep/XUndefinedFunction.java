@@ -21,14 +21,14 @@
  * 
  */
 
-package com.iabcinc.jmep;
+package com.googlecode.jmep;
 
 /**
- * This is an exception that occurs on access of an Undefined Unit.
+ * This is an exception that occurs on access of an Undefined Function.
  * @author Jo Desmet
  * @see com.iabcinc.jmep.XExpression
  */
-public class XUndefinedUnit extends XExpression {
+public class XUndefinedFunction extends XExpression {
   private static final long serialVersionUID = 1L;
   private String m_sName;
 
@@ -36,16 +36,16 @@ public class XUndefinedUnit extends XExpression {
    * NOTE: The constructor should not defined public as it should only
    * be used within the package.
    */
-  public XUndefinedUnit(int iPosition,String sName) {
-    super(iPosition,"Undefined Unit: " + sName);
+  public XUndefinedFunction(int iPosition,String sName) {
+    super(iPosition,"Undefined Function: " + sName);
     m_sName = sName;
   }
 
   /**
-   * Gets the name of the Undefined Unit.
-   * @return the name of the Undefined Unit.
+   * Gets the name of the Undefined Function.
+   * @return the name of the Undefined Function.
    */
-  public String getUnitName() {
+  public String getFunctionName() {
     return m_sName;
   }
 }

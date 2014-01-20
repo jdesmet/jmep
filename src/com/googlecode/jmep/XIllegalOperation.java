@@ -22,37 +22,48 @@
  */
 
 
-package com.iabcinc.jmep;
+package com.googlecode.jmep;
+
+import com.iabcinc.jmep.tokens.Token;
+
 
 /**
- * This is the base class for all exceptions that can occur using the
- * Expression Class.
+ * This is an exception that occurs on an unsupported operation.
  * @author Jo Desmet
- * @see com.iabcinc.jmep.Expression
- * @see com.iabcinc.jmep.XIllegalOperation
- * @see com.iabcinc.jmep.XIllegalStatus
- * @see com.iabcinc.jmep.XUndefinedVariable
- * @see com.iabcinc.jmep.XUndefinedFunction
- * @see com.iabcinc.jmep.XUndefinedUnit
  */
-public class XExpression extends Exception {
+public class XIllegalOperation extends XExpression {
   private static final long serialVersionUID = 1L;
-  private int m_iPosition;
+  @SuppressWarnings("unused") private Token token;
+  @SuppressWarnings("unused") private Object m_oValue1;
+  @SuppressWarnings("unused") private Object m_oValue2;
+  
+
+  public XIllegalOperation(Token token) { 
+	super(token.getPosition(),"Illegal operation");
+	this.token = token;
+	m_oValue1 = null;
+	m_oValue2 = null;
+  }
+ 
+  /*
+   * NOTE: The constructor should not defined public as it should only
+   * be used within the package.
+   */
+  public XIllegalOperation(Token token,Object oValue) {
+    super(token.getPosition(),"Illegal operation");
+    this.token = token;
+    m_oValue1 = oValue;
+    m_oValue2 = null;
+  }
 
   /*
    * NOTE: The constructor should not defined public as it should only
    * be used within the package.
    */
-  XExpression(int iPosition,String sError) {
-    super("ERROR(@"+iPosition+"): "+sError);
-    m_iPosition = iPosition;
-  }
-
-  /**
-   * Gets the position where the error occurred.
-   * @return the position of the problem.
-   */
-  public int getPosition() {
-    return m_iPosition;
+  public XIllegalOperation(Token token,Object oValue1,Object oValue2) {
+    super(token.getPosition(),"Illegal operation");
+    this.token = token;
+    m_oValue1 = oValue1;
+    m_oValue2 = oValue2;
   }
 } 

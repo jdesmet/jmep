@@ -1,4 +1,4 @@
-package com.iabcinc.jmep;
+package com.googlecode.jmep;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -28,6 +28,7 @@ public class CLJMEP {
     /* add a unit called 'mm' to the environment */
     oEnv.addUnit("mm",
       new Unit() {
+        @Override
         public Object apply(Object oValue) {
           if (oValue instanceof Double)
             return new Double(0.001*((Double)oValue).doubleValue());
@@ -43,6 +44,7 @@ public class CLJMEP {
     /* add a function called 'sin' to the environment */
     oEnv.addFunction("sin",
       new Function() {
+        @Override
         public Object call(Object [] oPars) {
           if (oPars == null) return null;
           if (oPars.length != 1) return null;
@@ -58,6 +60,7 @@ public class CLJMEP {
     oEnv.addConstant("name","neemsoft");
     oEnv.addVariable("time",
       new Variable() {
+        @Override
         public Object getValue() { return new Double(System.currentTimeMillis()/1000.0); }
       }
     );
