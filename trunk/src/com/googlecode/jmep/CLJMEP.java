@@ -3,9 +3,9 @@ package com.googlecode.jmep;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import com.iabcinc.jmep.hooks.Function;
-import com.iabcinc.jmep.hooks.Unit;
-import com.iabcinc.jmep.hooks.Variable;
+import com.googlecode.jmep.hooks.Function;
+import com.googlecode.jmep.hooks.Unit;
+import com.googlecode.jmep.hooks.Variable;
 
 /*
  * This is an example that uses the jmep mathematical parser. It is a command line only

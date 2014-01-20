@@ -24,7 +24,7 @@
 
 package com.googlecode.jmep;
 
-import com.iabcinc.jmep.tokens.Token;
+import com.googlecode.jmep.tokens.Token;
 
 
 /**
