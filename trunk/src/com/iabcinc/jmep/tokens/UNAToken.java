@@ -23,8 +23,8 @@
 
 package com.iabcinc.jmep.tokens;
 
-import com.iabcinc.jmep.XIllegalOperation;
-import com.iabcinc.jmep.XIllegalStatus;
+import com.googlecode.jmep.XIllegalOperation;
+import com.googlecode.jmep.XIllegalStatus;
 
 
 //TODO: Complex support:

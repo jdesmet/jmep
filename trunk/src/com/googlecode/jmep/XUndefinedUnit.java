@@ -21,14 +21,14 @@
  * 
  */
 
-package com.iabcinc.jmep;
+package com.googlecode.jmep;
 
 /**
- * This is an exception that occurs on access of an Undefined Variable.
+ * This is an exception that occurs on access of an Undefined Unit.
  * @author Jo Desmet
  * @see com.iabcinc.jmep.XExpression
  */
-public class XUndefinedVariable extends XExpression {
+public class XUndefinedUnit extends XExpression {
   private static final long serialVersionUID = 1L;
   private String m_sName;
 
@@ -36,16 +36,16 @@ public class XUndefinedVariable extends XExpression {
    * NOTE: The constructor should not defined public as it should only
    * be used within the package.
    */
-  public XUndefinedVariable(int iPosition,String sName) {
-    super(iPosition,"Undefined Variable: " + sName);
+  public XUndefinedUnit(int iPosition,String sName) {
+    super(iPosition,"Undefined Unit: " + sName);
     m_sName = sName;
   }
 
   /**
-   * Gets the name of the Undefined Variable.
-   * @return the name of the Undefined Variable.
+   * Gets the name of the Undefined Unit.
+   * @return the name of the Undefined Unit.
    */
-  public String getVariableName() {
+  public String getUnitName() {
     return m_sName;
   }
 }
