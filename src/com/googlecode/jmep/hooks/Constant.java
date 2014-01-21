@@ -20,8 +20,7 @@ final public class Constant implements Variable {
     this.value = value;
   }
 
-  public Object getValue() {
+  public Object evaluate() {
     return this.value;
   }
-
 }
