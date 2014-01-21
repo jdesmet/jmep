@@ -61,7 +61,7 @@ public class CLJMEP {
     oEnv.addVariable("time",
       new Variable() {
         @Override
-        public Object getValue() { return new Double(System.currentTimeMillis()/1000.0); }
+        public Object evaluate() { return new Double(System.currentTimeMillis()/1000.0); }
       }
     );
     
