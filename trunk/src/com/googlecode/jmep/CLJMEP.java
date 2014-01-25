@@ -72,7 +72,7 @@ public class CLJMEP {
         System.out.println("Give Expression ('.' to stop): ");
         sInput = oIn.readLine();
         if (sInput.equals(".")) break;
-        oExpression = new Expression(sInput,oEnv,false);
+        oExpression = new Expression(sInput,oEnv);
         oResult = oExpression.evaluate();
         System.out.println("Result = " + oResult);
       }
