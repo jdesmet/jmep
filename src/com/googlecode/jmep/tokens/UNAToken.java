@@ -39,7 +39,7 @@ public class UNAToken extends Token {
   private int m_kUNAToken;
 
   public UNAToken(int kUNAToken,int iPosition) {
-    super(Token.UNA,iPosition);
+    super(Token.Type.UNA,iPosition);
     m_kUNAToken = kUNAToken;
   }
 
