@@ -8,19 +8,17 @@ package com.googlecode.jmep.hooks;
 /**
  *
  * @author jd3714
+ * @param <T> A constant value should have also a constant type
  */
-final public class Constant implements Variable {
-  final private Object value;
+final public class Constant<T> implements Variable {
+  final private T value;
 
-  public Constant(Number value) {
+  public Constant(T value) {
     this.value = value;
   }
 
-  public Constant(String value) {
-    this.value = value;
-  }
-
-  public Object evaluate() {
+  @Override
+  public T evaluate() {
     return this.value;
   }
 }
