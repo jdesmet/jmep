@@ -26,10 +26,10 @@ package com.googlecode.jmep;
 import com.googlecode.jmep.hooks.UnaryOperator;
 import java.util.Map;
 
-final class UNAToken extends Token {
+final class UnaryOperatorToken extends Token {
   private final UnaryOperatorType unaryOperatorType;
 
-  UNAToken(UnaryOperatorType unaryOperatorType,int position) {
+  UnaryOperatorToken(UnaryOperatorType unaryOperatorType,int position) {
     super(Token.Type.UNA,position);
     this.unaryOperatorType = unaryOperatorType;
   }
@@ -39,14 +39,14 @@ final class UNAToken extends Token {
   }
 
   Object evaluate(Environment environment,Object operand)
-  throws XIllegalOperation,XIllegalStatus {
+  throws UndefinedOperatorException,IllegalExpressionStateException {
     Map<Class,UnaryOperator> implementations = environment.getUnaryOperators().get(this.unaryOperatorType);
     UnaryOperator operation = implementations.get(operand.getClass());
-    if (operation == null) throw new XIllegalOperation(this,operand);
+    if (operation == null) throw new UndefinedOperatorException(this,operand);
     try {
       return operation.apply(operand);
     } catch (IllegalArgumentException x) {
-      throw new XIllegalOperation(this, operand);
+      throw new UndefinedOperatorException(this, operand);
     }
   }
   

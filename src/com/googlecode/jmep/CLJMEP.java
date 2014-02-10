@@ -23,7 +23,7 @@ public class CLJMEP {
     String sInput = "";
     Expression oExpression;
     Object oResult;
-    Environment oEnv = new Environment();
+    Environment oEnv = SimpleEnvironment.getInstance();
 
     /* add a unit called 'mm' to the environment */
     oEnv.addUnit("mm",
@@ -76,7 +76,7 @@ public class CLJMEP {
         oResult = oExpression.evaluate();
         System.out.println("Result = " + oResult);
       }
-      catch (XExpression x) {
+      catch (ExpressionException x) {
         int iPos = x.getPosition();
         System.err.println(x.getMessage());
         System.err.println(sInput);
@@ -84,6 +84,7 @@ public class CLJMEP {
           for (; iPos != 0; iPos--) System.err.print(" ");
           System.err.println("^");
         }
+        x.printStackTrace();
       }
       catch (Exception x) {
         x.printStackTrace();
