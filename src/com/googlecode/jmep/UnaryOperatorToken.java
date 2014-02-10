@@ -39,14 +39,14 @@ final class UnaryOperatorToken extends Token {
   }
 
   Object evaluate(Environment environment,Object operand)
-  throws UndefinedOperatorException,IllegalExpressionStateException {
+  throws OperatorException {
     Map<Class,UnaryOperator> implementations = environment.getUnaryOperators().get(this.unaryOperatorType);
     UnaryOperator operation = implementations.get(operand.getClass());
     if (operation == null) throw new UndefinedOperatorException(this,operand);
     try {
       return operation.apply(operand);
-    } catch (IllegalArgumentException x) {
-      throw new UndefinedOperatorException(this, operand);
+    } catch (Throwable x) {
+      throw new OperatorException(this, operand,x);
     }
   }
   
