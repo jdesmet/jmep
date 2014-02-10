@@ -24,26 +24,24 @@
 
 package com.googlecode.jmep;
 
+
 /**
- * This is an exception that should never occur. Whenever an exception
- * like this occurs, it would general mean that there is a problem in the
- * program. If any of those exceptions occur, then please contact NeemSoft
- * with the expression string on which it has occurred.
+ * This is an exception that occurs on an unsupported operation.
  * @author Jo Desmet
- * @see com.iabcinc.jmep.XExpression
  */
-public class XIllegalStatus extends XExpression {
-  /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class UndefinedOperatorException extends OperatorException {
 
-public XIllegalStatus(int iPosition) {
-    super(iPosition,"Internal error, please contact NeemSoft");
+  /*
+   */
+  UndefinedOperatorException(UnaryOperatorToken token,Object operand) {
+    super(token,operand,"No matching unary operator implementation found");
   }
-  
-  public XIllegalStatus() {
-    super (-1,"Internal error, please contact NeemSoft");
-  }
-}
 
+  /*
+   * NOTE: The constructor should not defined public as it should only
+   * be used within the package.
+   */
+  UndefinedOperatorException(BinaryOperatorToken token,Object leftOperand,Object rightOperand) {
+    super(token,leftOperand,rightOperand,"No matching binary operator implementation found");
+  }
+} 

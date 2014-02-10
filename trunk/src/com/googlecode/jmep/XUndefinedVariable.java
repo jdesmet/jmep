@@ -28,7 +28,7 @@ package com.googlecode.jmep;
  * @author Jo Desmet
  * @see com.iabcinc.jmep.XExpression
  */
-public class XUndefinedVariable extends XExpression {
+public class XUndefinedVariable extends ExpressionException {
   private static final long serialVersionUID = 1L;
   private String m_sName;
 

@@ -25,34 +25,23 @@
 package com.googlecode.jmep;
 
 /**
- * This is the base class for all exceptions that can occur using the
- * Expression Class.
+ * This exception indicates that during the parsing or processing
+ * of the expression, the code went into an unexpected state. This is severe
+ * enough that normal execution cannot continue.
+ * This exception would be an indication of programmer error, and needs further
+ * investigation.
  * @author Jo Desmet
- * @see com.iabcinc.jmep.Expression
- * @see com.iabcinc.jmep.XIllegalOperation
- * @see com.iabcinc.jmep.XIllegalStatus
- * @see com.iabcinc.jmep.XUndefinedVariable
- * @see com.iabcinc.jmep.XUndefinedFunction
- * @see com.iabcinc.jmep.XUndefinedUnit
+ * @see com.iabcinc.jmep.XExpression
  */
-public class XExpression extends Exception {
-  private static final long serialVersionUID = 1L;
-  private int m_iPosition;
+public class IllegalExpressionStateException extends ExpressionException {
+	private static final long serialVersionUID = 1L;
 
-  /*
-   * NOTE: The constructor should not defined public as it should only
-   * be used within the package.
-   */
-  XExpression(int iPosition,String sError) {
-    super("ERROR(@"+iPosition+"): "+sError);
-    m_iPosition = iPosition;
+  IllegalExpressionStateException(int    iPosition) {
+    super(iPosition,"Invalid State");
   }
+  
+  IllegalExpressionStateException() {
+    super (-1,"Invalid State");
+  }
+}
 
-  /**
-   * Gets the position where the error occurred.
-   * @return the position of the problem.
-   */
-  public int getPosition() {
-    return m_iPosition;
-  }
-} 
