@@ -31,7 +31,6 @@ package com.googlecode.jmep;
  * This exception would be an indication of programmer error, and needs further
  * investigation.
  * @author Jo Desmet
- * @see com.iabcinc.jmep.XExpression
  */
 public class IllegalExpressionStateException extends ExpressionException {
 	private static final long serialVersionUID = 1L;

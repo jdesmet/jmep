@@ -218,10 +218,10 @@ public class Expression {
      * Expressions are evaluated strictly by default.
      * @param expression the string containing the mathematical expression.
      * @throws com.googlecode.jmep.ExpressionException
-     * @see com.iabcinc.jmep.ExpressionException
+     * @see ExpressionException
      */
     public Expression(String expression) throws ExpressionException {
-        this(expression,SimpleEnvironment.getInstance());
+        this(expression,BasicEnvironment.getInstance());
     }
     
     /**
@@ -265,7 +265,7 @@ public class Expression {
         return identifier.toString();
     }
     
-    private static Number parseNumber(StringCharacterIterator iterString) throws ExpressionException {
+    private Number parseNumber(StringCharacterIterator iterString) throws ExpressionException {
         char cc = iterString.current();
         StringBuilder sb = new StringBuilder();
         
@@ -319,6 +319,9 @@ public class Expression {
          * 0.1*0.1*100-1 will again evaluate to 2.22E-16 due to the same introduced roundings. Use of BigDecimal for
          * representing the numbers will cause this to be zero as well.
         */
+        if (environment.getOperationalMode() == OperationalMode.FINANCIAL) {
+          return bd;
+        }
         return new Double(bd.doubleValue());
     }
     
@@ -342,7 +345,7 @@ public class Expression {
               string.append(cc);
               cc = iterString.next();
             }
-            if (cc == '"') cc = iterString.next();
+            if (cc == '"') iterString.next(); // Ignore Return-Value
             return string.toString();
         }
         return null;
@@ -457,16 +460,8 @@ public class Expression {
                 
                 number = parseNumber(iterString);
                 cc = iterString.current();
-                if (number == null)
-                    throw new IllegalExpressionStateException(iNumberPos);
-                else if (number instanceof Integer)
-                    this.tokenList.add(new ValueToken(((Integer)number).intValue(),iNumberPos));
-                else if (number instanceof Long)
-                    this.tokenList.add(new ValueToken(((Long)number).longValue(),iNumberPos));
-                else if (number instanceof Double)
-                    this.tokenList.add(new ValueToken(((Double)number).doubleValue(),iNumberPos));
-                else
-                    throw new IllegalExpressionStateException(iNumberPos);
+                if (number == null) throw new IllegalExpressionStateException(iNumberPos);
+                this.tokenList.add(new ValueToken(number,iNumberPos));
                 continue;
             }
             
@@ -590,7 +585,6 @@ public class Expression {
     }
     
     private void compile() throws ExpressionException{
-        int action = 0;
         int parameterCount = 0;
         Deque<Token> operatorStack = new LinkedList<>();
         Deque<Integer> parameterCountStack = new LinkedList<>();
@@ -605,7 +599,7 @@ public class Expression {
         token = (Token)iToken.next();
         for(;;) {
             topTokenOnOperatorStack = operatorStack.peekLast();
-            action = arr_kDispatch[topTokenOnOperatorStack.getType().index][token.getType().index];
+            int action = arr_kDispatch[topTokenOnOperatorStack.getType().index][token.getType().index];
             
             if (action == D_Precedence) {
                 /* Two binary operators following each other */
@@ -720,7 +714,7 @@ public class Expression {
     public Object evaluate() throws ExpressionException {
         //Token token;
         //Need a proper Value Wrapper in stead of Object
-        Deque<Object> resultStack = new LinkedList<Object>();
+        Deque<Object> resultStack = new LinkedList<>();
         
         for (Token token:rpnStack) {
             switch (token.getType()) {
@@ -767,27 +761,24 @@ public class Expression {
                 break;
             }
             case UNA:
-                try {
-                    Object value = resultStack.pop();
-                    resultStack.push(((UnaryOperatorToken)token).evaluate(this.environment,value));
-                }
-            catch (NoSuchElementException x) {
-                /* Wrong number of arguments */
-                throw new ExpressionException(token.getPosition(),"Wrong number of arguments");
-            }
-            break;
+              try {
+                Object value = resultStack.pop();
+                resultStack.push(((UnaryOperatorToken)token).evaluate(this.environment,value));
+              } catch (NoSuchElementException x) {
+                throw new OperatorException((UnaryOperatorToken)token, null, "Wrong number of arguments");
+              }
+              break;
             case BIN:
-                try {
-                    Object rightOperand = resultStack.pop();
-                    Object leftOperand = resultStack.pop();
-                    Object result;
-                    result = ((BinaryOperatorToken)token).evaluate(this.environment,leftOperand,rightOperand);
-                    resultStack.push(result);
-                }
-            catch (NoSuchElementException x) {
+              try {
+                  Object rightOperand = resultStack.pop();
+                  Object leftOperand = resultStack.pop();
+                  Object result;
+                  result = ((BinaryOperatorToken)token).evaluate(this.environment,leftOperand,rightOperand);
+                  resultStack.push(result);
+              } catch (NoSuchElementException x) {
                 /* Wrong number of arguments */
-                throw new ExpressionException(token.getPosition(),"Wrong number of arguments");
-            }
+                throw new OperatorException((BinaryOperatorToken)token, null, null, "Wrong number of arguments");
+              }
             break;
             case VAL:
                 resultStack.push(((ValueToken)token).getValue());

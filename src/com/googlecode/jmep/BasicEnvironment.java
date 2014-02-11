@@ -10,13 +10,19 @@ import com.googlecode.jmep.hooks.BinaryOperator;
 import static com.googlecode.jmep.BinaryOperatorType.*;
 import static com.googlecode.jmep.UnaryOperatorType.*;
 import com.googlecode.jmep.hooks.UnaryOperator;
+import java.math.BigDecimal;
 
 /**
  *
  * @author jdesmet
  */
-public class SimpleEnvironment extends Environment {
-  private SimpleEnvironment () {
+public class BasicEnvironment extends Environment {
+  public BasicEnvironment () {
+    this(Expression.OperationalMode.BASIC);
+  }
+  
+  protected BasicEnvironment (Expression.OperationalMode operationalMode) {
+    super(operationalMode);
     // Will look neater with Lambda:
     // register(ADD,Double.class,Double.class,(t,u)->t+u);
     register(POW,Double.class, Double.class, new BinaryOperator<Double, Double>() {
@@ -112,6 +118,12 @@ public class SimpleEnvironment extends Environment {
       @Override
       public Object apply(Long t, Long u) {
         return t % u;
+      }
+    });
+    register(ADD,BigDecimal.class, BigDecimal.class, new BinaryOperator<BigDecimal, BigDecimal>() {
+      @Override
+      public Object apply(BigDecimal t, BigDecimal u) {
+        return t.add(u);
       }
     });
     register(ADD,Double.class, Double.class, new BinaryOperator<Double, Double>() {
@@ -343,10 +355,12 @@ public class SimpleEnvironment extends Environment {
     register(INV,Long.class, new UnaryOperator<Long>() { @Override public Object apply(Long t) { return ~t.longValue(); } });
     register(PLS,Double.class, new UnaryOperator<Double>() { @Override public Object apply(Double t) { return t; } });
     register(MIN,Double.class, new UnaryOperator<Double>() { @Override public Object apply(Double t) { return -t.doubleValue(); } });
+    
+    register(Long.class, BigDecimal.class, new UpgradeConversion<Long,BigDecimal>() { @Override public BigDecimal apply(Long t) { return new BigDecimal(t); } });
   }
 
-  static public SimpleEnvironment getInstance() {
-    return new SimpleEnvironment();
+  static public BasicEnvironment getInstance() {
+    return new BasicEnvironment();
   }
   
 }
