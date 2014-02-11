@@ -26,7 +26,6 @@ package com.googlecode.jmep;
 /**
  * This is an exception that occurs on access of an Undefined Function.
  * @author Jo Desmet
- * @see com.iabcinc.jmep.XExpression
  */
 public class XUndefinedFunction extends ExpressionException {
   private static final long serialVersionUID = 1L;

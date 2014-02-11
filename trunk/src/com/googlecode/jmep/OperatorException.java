@@ -39,7 +39,12 @@ public class OperatorException extends ExpressionException {
   /*
    */
   OperatorException(UnaryOperatorToken token,Object operand,String message) {
-    super(token.getPosition(),token.getType()+" on ["+operand.getClass().getSimpleName()+"]: "+message);
+    super(
+            token.getPosition(),
+            token.getUnaryOperatorType()+" on ["
+                    + (operand==null?"?":operand.getClass().getSimpleName())+"]: "
+                    + message
+    );
     this.token = token;
     this.leftOperand = operand;
     this.rightOperand = null;
@@ -51,7 +56,13 @@ public class OperatorException extends ExpressionException {
   }
 
   OperatorException(BinaryOperatorToken token,Object leftOperand,Object rightOperand,String message) {
-    super(token.getPosition(),token.getType()+" on ["+leftOperand.getClass().getSimpleName()+","+rightOperand.getClass().getSimpleName()+"]: "+message);
+    super(
+            token.getPosition(),
+            token.getBinaryOperatorType()+" on ["
+                    + (leftOperand==null?"?":leftOperand.getClass().getSimpleName())+","
+                    + (rightOperand==null?"?":rightOperand.getClass().getSimpleName())+"]: "
+                    + message
+    );
     this.token = token;
     this.leftOperand = leftOperand;
     this.rightOperand = rightOperand;

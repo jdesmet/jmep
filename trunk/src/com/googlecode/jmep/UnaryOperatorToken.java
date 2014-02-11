@@ -41,6 +41,7 @@ final class UnaryOperatorToken extends Token {
   Object evaluate(Environment environment,Object operand)
   throws OperatorException {
     Map<Class,UnaryOperator> implementations = environment.getUnaryOperators().get(this.unaryOperatorType);
+    if (implementations == null) throw new UndefinedOperatorException(this,operand);
     UnaryOperator operation = implementations.get(operand.getClass());
     if (operation == null) throw new UndefinedOperatorException(this,operand);
     try {

@@ -20,13 +20,15 @@ import com.googlecode.jmep.hooks.Variable;
 public class CLJMEP {
   public static void main(String[] args) {
     BufferedReader oIn = new BufferedReader(new InputStreamReader(System.in));
-    String sInput = "";
-    Expression oExpression;
-    Object oResult;
-    Environment oEnv = SimpleEnvironment.getInstance();
+    String input = "";
+    Expression expression;
+    Object result;
+    Environment basic = Environment.getInstance(Expression.OperationalMode.BASIC);
+    Environment financial = Environment.getInstance(Expression.OperationalMode.FINANCIAL);
+    Environment env = basic;
 
     /* add a unit called 'mm' to the environment */
-    oEnv.addUnit("mm",
+    env.addUnit("mm",
       new Unit() {
         @Override
         public Object apply(Object oValue) {
@@ -42,7 +44,7 @@ public class CLJMEP {
     );
 
     /* add a function called 'sin' to the environment */
-    oEnv.addFunction("sin",
+    env.addFunction("sin",
       new Function() {
         @Override
         public Object call(Object [] oPars) {
@@ -55,10 +57,10 @@ public class CLJMEP {
       }
     );
 
-    oEnv.addConstant("e",Math.E);
-    oEnv.addConstant("pi",Math.PI);
-    oEnv.addConstant("name","neemsoft");
-    oEnv.addVariable("time",
+    env.addConstant("e",Math.E);
+    env.addConstant("pi",Math.PI);
+    env.addConstant("name","neemsoft");
+    env.addVariable("time",
       new Variable() {
         @Override
         public Object evaluate() { return new Double(System.currentTimeMillis()/1000.0); }
@@ -69,17 +71,23 @@ public class CLJMEP {
     System.out.println("You can use mm as unit and sin as function.");
     do {
       try {
-        System.out.println("Give Expression ('.' to stop): ");
-        sInput = oIn.readLine();
-        if (sInput.equals(".")) break;
-        oExpression = new Expression(sInput,oEnv);
-        oResult = oExpression.evaluate();
-        System.out.println("Result = " + oResult);
-      }
-      catch (ExpressionException x) {
+        System.out.println("Give "+env.getOperationalMode().name()+" Expression ('.' to stop, or financial/basic to switch to that mode): ");
+        input = oIn.readLine();
+        if (input.equals(".")) break;
+        if (input.equals("financial")) {
+          env = financial;
+          continue;
+        } else if (input.equals("basic")) {
+          env = basic;
+          continue;
+        }
+        expression = new Expression(input,env);
+        result = expression.evaluate();
+        System.out.println("Result = ("+result.getClass().getSimpleName()+")" + result);
+      } catch (ExpressionException x) {
         int iPos = x.getPosition();
         System.err.println(x.getMessage());
-        System.err.println(sInput);
+        System.err.println(input);
         if (iPos >= 0) {
           for (; iPos != 0; iPos--) System.err.print(" ");
           System.err.println("^");

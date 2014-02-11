@@ -28,12 +28,6 @@ package com.googlecode.jmep;
  * This is the base class for all exceptions that can occur using the
  * Expression Class.
  * @author Jo Desmet
- * @see com.iabcinc.jmep.Expression
- * @see com.iabcinc.jmep.XIllegalOperation
- * @see com.iabcinc.jmep.XIllegalStatus
- * @see com.iabcinc.jmep.XUndefinedVariable
- * @see com.iabcinc.jmep.XUndefinedFunction
- * @see com.iabcinc.jmep.XUndefinedUnit
  */
 public class ExpressionException extends Exception {
   private static final long serialVersionUID = 1L;
