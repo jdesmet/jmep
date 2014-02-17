@@ -31,12 +31,6 @@ public class BasicEnvironment extends Environment {
         return Math.pow(t, u);
       }
     });
-    register(POW,Double.class, Long.class, new BinaryOperator<Double, Long>() {
-      @Override
-      public Double apply(Double t, Long u) {
-        return Math.pow(t, u);
-      }
-    });
     register(POW,Long.class, Long.class, new BinaryOperator<Long, Long>() {
       @Override
       public Object apply(Long t, Long u) {
@@ -56,12 +50,6 @@ public class BasicEnvironment extends Environment {
     register(MUL,Double.class, Double.class, new BinaryOperator<Double, Double>() {
       @Override
       public Double apply(Double t, Double u) {
-        return t * u;
-      }
-    });
-    register(MUL,Double.class, Long.class, new BinaryOperator<Double, Long>() {
-      @Override
-      public Double apply(Double t, Long u) {
         return t * u;
       }
     });
@@ -93,18 +81,6 @@ public class BasicEnvironment extends Environment {
         return t / u;
       }
     });
-    register(DIV,Double.class, Long.class, new BinaryOperator<Double, Long>() {
-      @Override
-      public Double apply(Double t, Long u) {
-        return t / u;
-      }
-    });
-    register(DIV,Long.class, Double.class, new BinaryOperator<Long, Double>() {
-      @Override
-      public Double apply(Long t, Double u) {
-        return t / u;
-      }
-    });
     register(DIV,Long.class, Long.class, new BinaryOperator<Long, Long>() {
       @Override
       public Object apply(Long t, Long u) {
@@ -132,12 +108,6 @@ public class BasicEnvironment extends Environment {
         return t + u;
       }
     });
-    register(ADD,Double.class, Long.class, new BinaryOperator<Double, Long>() {
-      @Override
-      public Double apply(Double t, Long u) {
-        return t + u;
-      }
-    });
     register(ADD,Long.class, Long.class, new BinaryOperator<Long, Long>() {
       @Override
       public Long apply(Long t, Long u) {
@@ -156,18 +126,6 @@ public class BasicEnvironment extends Environment {
         return t - u;
       }
     });
-    register(SUB,Double.class, Long.class, new BinaryOperator<Double, Long>() {
-      @Override
-      public Double apply(Double t, Long u) {
-        return t - u;
-      }
-    });
-    register(SUB,Long.class, Double.class, new BinaryOperator<Long, Double>() {
-      @Override
-      public Double apply(Long t, Double u) {
-        return t - u;
-      }
-    });
     register(SUB,Long.class, Long.class, new BinaryOperator<Long, Long>() {
       @Override
       public Long apply(Long t, Long u) {
@@ -177,18 +135,6 @@ public class BasicEnvironment extends Environment {
     register(LT,Double.class, Double.class, new BinaryOperator<Double, Double>() {
       @Override
       public Long apply(Double t, Double u) {
-        return (t < u) ? 1L : 0L;
-      }
-    });
-    register(LT,Double.class, Long.class, new BinaryOperator<Double, Long>() {
-      @Override
-      public Long apply(Double t, Long u) {
-        return (t < u) ? 1L : 0L;
-      }
-    });
-    register(LT,Long.class, Double.class, new BinaryOperator<Long, Double>() {
-      @Override
-      public Long apply(Long t, Double u) {
         return (t < u) ? 1L : 0L;
       }
     });
@@ -210,18 +156,6 @@ public class BasicEnvironment extends Environment {
         return (t > u) ? 1L : 0L;
       }
     });
-    register(GT,Double.class, Long.class, new BinaryOperator<Double, Long>() {
-      @Override
-      public Long apply(Double t, Long u) {
-        return (t > u) ? 1L : 0L;
-      }
-    });
-    register(GT,Long.class, Double.class, new BinaryOperator<Long, Double>() {
-      @Override
-      public Long apply(Long t, Double u) {
-        return (t > u) ? 1L : 0L;
-      }
-    });
     register(GT,Long.class, Long.class, new BinaryOperator<Long, Long>() {
       @Override
       public Long apply(Long t, Long u) {
@@ -240,18 +174,6 @@ public class BasicEnvironment extends Environment {
         return (t <= u) ? 1L : 0L;
       }
     });
-    register(LE,Double.class, Long.class, new BinaryOperator<Double, Long>() {
-      @Override
-      public Long apply(Double t, Long u) {
-        return (t <= u) ? 1L : 0L;
-      }
-    });
-    register(LE,Long.class, Double.class, new BinaryOperator<Long, Double>() {
-      @Override
-      public Long apply(Long t, Double u) {
-        return (t <= u) ? 1L : 0L;
-      }
-    });
     register(LE,Long.class, Long.class, new BinaryOperator<Long, Long>() {
       @Override
       public Long apply(Long t, Long u) {
@@ -267,18 +189,6 @@ public class BasicEnvironment extends Environment {
     register(GE,Double.class, Double.class, new BinaryOperator<Double, Double>() {
       @Override
       public Long apply(Double t, Double u) {
-        return (t >= u) ? 1L : 0L;
-      }
-    });
-    register(GE,Double.class, Long.class, new BinaryOperator<Double, Long>() {
-      @Override
-      public Long apply(Double t, Long u) {
-        return (t >= u) ? 1L : 0L;
-      }
-    });
-    register(GE,Long.class, Double.class, new BinaryOperator<Long, Double>() {
-      @Override
-      public Long apply(Long t, Double u) {
         return (t >= u) ? 1L : 0L;
       }
     });
@@ -357,6 +267,7 @@ public class BasicEnvironment extends Environment {
     register(MIN,Double.class, new UnaryOperator<Double>() { @Override public Object apply(Double t) { return -t.doubleValue(); } });
     
     register(Long.class, BigDecimal.class, new UpgradeConversion<Long,BigDecimal>() { @Override public BigDecimal apply(Long t) { return new BigDecimal(t); } });
+    register(Long.class, Double.class, new UpgradeConversion<Long,Double>() { @Override public Double apply(Long t) { return new Double(t); } });
   }
 
   static public BasicEnvironment getInstance() {

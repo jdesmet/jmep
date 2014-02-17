@@ -238,6 +238,7 @@ public class Expression {
     public Expression(String expression,Environment environment) throws ExpressionException {
         this.expression = expression;
         this.environment = environment;
+        environment.resolve();
         tokenize();
         compile();
         /* optimize(); */
