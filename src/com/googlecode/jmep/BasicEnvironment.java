@@ -33,7 +33,7 @@ public class BasicEnvironment extends Environment {
     });
     register(POW,Long.class, Long.class, new BinaryOperator<Long, Long>() {
       @Override
-      public Object apply(Long t, Long u) {
+      public Number apply(Long t, Long u) {
         if (u == 0) {
           return 1L;
         }
@@ -83,7 +83,7 @@ public class BasicEnvironment extends Environment {
     });
     register(DIV,Long.class, Long.class, new BinaryOperator<Long, Long>() {
       @Override
-      public Object apply(Long t, Long u) {
+      public Number apply(Long t, Long u) {
         if (t >= u && t % u == 0) {
           return t / u;
         }
@@ -92,13 +92,13 @@ public class BasicEnvironment extends Environment {
     });
     register(MOD,Long.class, Long.class, new BinaryOperator<Long, Long>() {
       @Override
-      public Object apply(Long t, Long u) {
+      public Long apply(Long t, Long u) {
         return t % u;
       }
     });
     register(ADD,BigDecimal.class, BigDecimal.class, new BinaryOperator<BigDecimal, BigDecimal>() {
       @Override
-      public Object apply(BigDecimal t, BigDecimal u) {
+      public BigDecimal apply(BigDecimal t, BigDecimal u) {
         return t.add(u);
       }
     });
@@ -259,12 +259,12 @@ public class BasicEnvironment extends Environment {
       }
     });
 
-    register(PLS,Long.class, new UnaryOperator<Long>() { @Override public Object apply(Long t) { return t; } });
-    register(MIN,Long.class, new UnaryOperator<Long>() { @Override public Object apply(Long t) { return -t.longValue(); } });
-    register(NOT,Long.class, new UnaryOperator<Long>() { @Override public Object apply(Long t) { return -t.longValue(); } });
-    register(INV,Long.class, new UnaryOperator<Long>() { @Override public Object apply(Long t) { return ~t.longValue(); } });
-    register(PLS,Double.class, new UnaryOperator<Double>() { @Override public Object apply(Double t) { return t; } });
-    register(MIN,Double.class, new UnaryOperator<Double>() { @Override public Object apply(Double t) { return -t.doubleValue(); } });
+    register(PLS,Long.class, new UnaryOperator<Long>() { @Override public Long apply(Long t) { return t; } });
+    register(MIN,Long.class, new UnaryOperator<Long>() { @Override public Long apply(Long t) { return -t.longValue(); } });
+    register(NOT,Long.class, new UnaryOperator<Long>() { @Override public Long apply(Long t) { return -t.longValue(); } });
+    register(INV,Long.class, new UnaryOperator<Long>() { @Override public Long apply(Long t) { return ~t.longValue(); } });
+    register(PLS,Double.class, new UnaryOperator<Double>() { @Override public Double apply(Double t) { return t; } });
+    register(MIN,Double.class, new UnaryOperator<Double>() { @Override public Double apply(Double t) { return -t.doubleValue(); } });
     
     register(Long.class, BigDecimal.class, new UpgradeConversion<Long,BigDecimal>() { @Override public BigDecimal apply(Long t) { return new BigDecimal(t); } });
     register(Long.class, Double.class, new UpgradeConversion<Long,Double>() { @Override public Double apply(Long t) { return new Double(t); } });
