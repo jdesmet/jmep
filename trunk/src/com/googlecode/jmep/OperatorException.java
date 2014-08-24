@@ -38,6 +38,23 @@ public class OperatorException extends ExpressionException {
 
   /*
    */
+  OperatorException(UnitToken token,Object operand,String message) {
+    super(
+            token.getPosition(),
+            token.getName()+" on ["
+                    + (operand==null?"?":operand.getClass().getSimpleName())+"]: "
+                    + message
+    );
+    this.token = token;
+    this.leftOperand = operand;
+    this.rightOperand = null;
+  }
+
+  OperatorException(UnitToken token,Object operand,Throwable x) {
+    this(token,operand,x.getMessage());
+    this.initCause(x);
+  }
+
   OperatorException(UnaryOperatorToken token,Object operand,String message) {
     super(
             token.getPosition(),

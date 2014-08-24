@@ -29,15 +29,15 @@ package com.googlecode.jmep;
  */
 public class XUndefinedFunction extends ExpressionException {
   private static final long serialVersionUID = 1L;
-  private String m_sName;
+  private final String name;
 
   /*
    * NOTE: The constructor should not defined public as it should only
    * be used within the package.
    */
-  public XUndefinedFunction(int iPosition,String sName) {
-    super(iPosition,"Undefined Function: " + sName);
-    m_sName = sName;
+  public XUndefinedFunction(int position,String name) {
+    super(position,"Undefined Function: " + name);
+    this.name = name;
   }
 
   /**
@@ -45,6 +45,6 @@ public class XUndefinedFunction extends ExpressionException {
    * @return the name of the Undefined Function.
    */
   public String getFunctionName() {
-    return m_sName;
+    return name;
   }
 }

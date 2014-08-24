@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 import com.googlecode.jmep.hooks.Function;
-import com.googlecode.jmep.hooks.Unit;
 import com.googlecode.jmep.hooks.Variable;
 
 /*
@@ -28,20 +27,8 @@ public class CLJMEP {
     Environment env = basic;
 
     /* add a unit called 'mm' to the environment */
-    env.addUnit("mm",
-      new Unit() {
-        @Override
-        public Object apply(Object oValue) {
-          if (oValue instanceof Double)
-            return new Double(0.001*((Double)oValue).doubleValue());
-          if (oValue instanceof Integer)
-              return new Double(0.001*((Integer)oValue).intValue());
-          if (oValue instanceof Long)
-              return new Double(0.001*((Long)oValue).longValue());
-          return null;
-        }
-      }
-    );
+    env.registerUnit("mm", Double.class, (t)->0.001*t);
+    env.registerUnit("mm", Long.class, (t)->0.001*t);
 
     /* add a function called 'sin' to the environment */
     env.addFunction("sin",
