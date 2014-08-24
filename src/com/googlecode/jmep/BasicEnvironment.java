@@ -8,6 +8,7 @@ package com.googlecode.jmep;
 
 import static com.googlecode.jmep.BinaryOperatorType.*;
 import static com.googlecode.jmep.UnaryOperatorType.*;
+import com.googlecode.jmep.hooks.BinaryOperator;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -32,7 +33,7 @@ public class BasicEnvironment extends Environment {
           for (int i = 0; i < u; i++) {
             returnValue *= t;
           }
-          return new Long(returnValue);
+          return returnValue;
         }
         return Math.pow(t, u);
     });
@@ -52,7 +53,7 @@ public class BasicEnvironment extends Environment {
       return value;
     });
     register(DIV,Double.class, Double.class, (t,u)->t / u);
-    register(DIV,Long.class, Long.class, (t,u)->t.doubleValue() / u);
+    register(DIV,Long.class, Long.class, (Long t, Long u) -> { if (u != 0L && t%u == 0L) return t/u; return t.doubleValue()/u;} );
     register(MOD,Long.class, Long.class, (t,u)->t % u);
     register(ADD,BigDecimal.class, BigDecimal.class, (t,u)->t.add(u));
     register(ADD,Double.class, Double.class, (t,u)->t + u);
@@ -79,8 +80,8 @@ public class BasicEnvironment extends Environment {
     register(AND,Long.class, Long.class, (t,u)->(t & u));
     register(XOR,Long.class, Long.class, (t,u)->(t ^ u));
     register(OR,Long.class, Long.class, (t,u)->(t | u));
-    register(LAND,Long.class, Long.class, (t,u)->(((t != 0) && (u != 0)) ? 1L : 0L));
-    register(LOR,Long.class, Long.class, (t,u)->(((t != 0) || (u != 0)) ? 1L : 0L));
+    register(LAND,Long.class, Long.class, (t,u)->(((t != 0L) && (u != 0L)) ? 1L : 0L));
+    register(LOR,Long.class, Long.class, (t,u)->(((t != 0L) || (u != 0L)) ? 1L : 0L));
 
     // Register Unary Operators
     register(PLS,Long.class, (t)->t);

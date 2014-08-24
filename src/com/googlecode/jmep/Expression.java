@@ -24,7 +24,6 @@
 package com.googlecode.jmep;
 
 import com.googlecode.jmep.hooks.Constant;
-import com.googlecode.jmep.hooks.Unit;
 import com.googlecode.jmep.hooks.Variable;
 import com.googlecode.jmep.hooks.Function;
 
@@ -410,11 +409,7 @@ public class Expression {
                         continue;
                     } else {
                         /* Else it must be a unit operator */
-                        Unit oUnit = (Unit)this.environment.getUnit(identifier);
-                        if (oUnit == null)
-                            this.tokenList.add(new UnitToken(identifier,identifierPosition));
-                        else
-                            this.tokenList.add(new UnitToken(identifier,oUnit,identifierPosition));
+                        this.tokenList.add(new UnitToken(identifier,identifierPosition));
                         continue;
                     }
                 } else if (lastToken.getType() != Token.Type.UNI) {
@@ -746,7 +741,7 @@ public class Expression {
             case UNI:
                 try {
                     Object value = resultStack.pop();
-                    value = ((UnitToken)token).evaluate(value);
+                    value = ((UnitToken)token).evaluate(this.environment,value);
                     resultStack.push(value);
                 }
             catch (NoSuchElementException x) {

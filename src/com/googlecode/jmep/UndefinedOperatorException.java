@@ -33,6 +33,10 @@ public class UndefinedOperatorException extends OperatorException {
 
   /*
    */
+  UndefinedOperatorException(UnitToken token,Object operand) {
+    super(token,operand,"No matching unit implementation found");
+  }
+
   UndefinedOperatorException(UnaryOperatorToken token,Object operand) {
     super(token,operand,"No matching unary operator implementation found");
   }
