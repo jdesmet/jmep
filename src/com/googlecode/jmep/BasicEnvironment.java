@@ -8,7 +8,6 @@ package com.googlecode.jmep;
 
 import static com.googlecode.jmep.BinaryOperatorType.*;
 import static com.googlecode.jmep.UnaryOperatorType.*;
-import com.googlecode.jmep.hooks.BinaryOperator;
 import java.math.BigDecimal;
 import java.util.Objects;
 
