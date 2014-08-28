@@ -24,27 +24,27 @@
 package com.googlecode.jmep;
 
 /**
- * This is an exception that occurs on access of an Undefined Function.
+ * This is an exception that occurs on access of an Undefined Variable.
  * @author Jo Desmet
  */
-public class XUndefinedFunction extends ExpressionException {
+public class UndefinedVariableException extends ExpressionException {
   private static final long serialVersionUID = 1L;
-  private final String name;
+  private final String variableName;
 
   /*
    * NOTE: The constructor should not defined public as it should only
    * be used within the package.
    */
-  public XUndefinedFunction(int position,String name) {
-    super(position,"Undefined Function: " + name);
-    this.name = name;
+  public UndefinedVariableException(int position,String name) {
+    super(position,"Undefined Variable: " + name);
+    variableName = name;
   }
 
   /**
-   * Gets the name of the Undefined Function.
-   * @return the name of the Undefined Function.
+   * Gets the name of the Undefined Variable.
+   * @return the name of the Undefined Variable.
    */
-  public String getFunctionName() {
-    return name;
+  public String getVariableName() {
+    return variableName;
   }
 }

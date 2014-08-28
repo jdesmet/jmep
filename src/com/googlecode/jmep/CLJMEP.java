@@ -38,7 +38,7 @@ public class CLJMEP {
           if (oPars == null) return null;
           if (oPars.length != 1) return null;
           if (oPars[0] instanceof Double || oPars[0] instanceof Integer)
-            return new Double(Math.sin(((Number)oPars[0]).doubleValue()));
+            return Math.sin(((Number)oPars[0]).doubleValue());
           return null;
         }
       }
@@ -47,26 +47,25 @@ public class CLJMEP {
     env.addConstant("e",Math.E);
     env.addConstant("pi",Math.PI);
     env.addConstant("name","neemsoft");
-    env.addVariable("time",
-      new Variable() {
-        @Override
-        public Object evaluate() { return new Double(System.currentTimeMillis()/1000.0); }
-      }
-    );
+    env.addVariable("time",()->System.currentTimeMillis()/1000.0);
+    financial.addVariable("time",()->System.currentTimeMillis()/1000.0);
     
     System.out.println("Starting up Command Line example of jmep.");
     System.out.println("You can use mm as unit and sin as function.");
+    LOOP:
     do {
       try {
         System.out.println("Give "+env.getOperationalMode().name()+" Expression ('.' to stop, or financial/basic to switch to that mode): ");
         input = oIn.readLine();
-        if (input.equals(".")) break;
-        if (input.equals("financial")) {
-          env = financial;
-          continue;
-        } else if (input.equals("basic")) {
-          env = basic;
-          continue;
+        switch (input) {
+          case ".": break LOOP;
+          case "": continue;
+          case "financial":
+            env = financial;
+            continue;
+          case "basic":
+            env = basic;
+            continue;
         }
         expression = new Expression(input,env);
         result = expression.evaluate();
@@ -79,10 +78,9 @@ public class CLJMEP {
           for (; iPos != 0; iPos--) System.err.print(" ");
           System.err.println("^");
         }
-        x.printStackTrace();
-      }
-      catch (Exception x) {
-        x.printStackTrace();
+        x.printStackTrace(System.err);
+      } catch (Exception x) {
+        x.printStackTrace(System.err);
       }
     } while (true);
   }
