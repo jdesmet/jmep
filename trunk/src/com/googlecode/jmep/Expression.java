@@ -437,8 +437,7 @@ public class Expression {
                 else {
                     /* it is a variable */
                     Variable variable = this.environment.getVariable(identifier);
-                    if (variable == null)
-                      this.tokenList.add(new VariableToken(identifier,identifierPosition));
+                    if (variable == null) throw new UndefinedVariableException(identifierPosition, identifier);
                     else if (variable instanceof Constant) {
                       Object value = variable.evaluate();
                       if (value instanceof Integer) value = new Long((Integer)value);
