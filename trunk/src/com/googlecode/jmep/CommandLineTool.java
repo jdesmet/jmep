@@ -16,7 +16,7 @@ import com.googlecode.jmep.hooks.Variable;
  *
  */
 
-public class CLJMEP {
+public class CommandLineTool {
   public static void main(String[] args) {
     BufferedReader oIn = new BufferedReader(new InputStreamReader(System.in));
     String input = "";
