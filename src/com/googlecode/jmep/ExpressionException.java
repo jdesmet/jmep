@@ -37,9 +37,17 @@ public class ExpressionException extends Exception {
    * NOTE: The constructor should not defined public as it should only
    * be used within the package.
    */
-  protected ExpressionException(int position,String sError) {
-    super("ERROR(@"+position+"): "+sError);
+  protected ExpressionException(int position,String error,Throwable x) {
+    super("ERROR(@"+position+"): "+error,x);
     this.position = position;
+  }
+
+  /*
+   * NOTE: The constructor should not defined public as it should only
+   * be used within the package.
+   */
+  protected ExpressionException(int position,String error) {
+    this(position,error,null);
   }
 
   /**

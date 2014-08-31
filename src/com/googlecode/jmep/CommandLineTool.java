@@ -3,8 +3,8 @@ package com.googlecode.jmep;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import com.googlecode.jmep.hooks.Function;
-import com.googlecode.jmep.hooks.Variable;
+import com.googlecode.jmep.function.Function;
+import com.googlecode.jmep.function.Variable;
 
 /*
  * This is an example that uses the jmep mathematical parser. It is a command line only
@@ -29,20 +29,6 @@ public class CommandLineTool {
     /* add a unit called 'mm' to the environment */
     env.registerUnit("mm", Double.class, (t)->0.001*t);
     env.registerUnit("mm", Long.class, (t)->0.001*t);
-
-    /* add a function called 'sin' to the environment */
-    env.addFunction("sin",
-      new Function() {
-        @Override
-        public Object call(Object [] oPars) {
-          if (oPars == null) return null;
-          if (oPars.length != 1) return null;
-          if (oPars[0] instanceof Double || oPars[0] instanceof Integer)
-            return Math.sin(((Number)oPars[0]).doubleValue());
-          return null;
-        }
-      }
-    );
 
     env.addConstant("e",Math.E);
     env.addConstant("pi",Math.PI);

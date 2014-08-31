@@ -23,7 +23,7 @@
 
 package com.googlecode.jmep;
 
-import com.googlecode.jmep.hooks.UnaryOperator;
+import com.googlecode.jmep.function.UnaryOperator;
 import java.util.Map;
 
 final class UnaryOperatorToken extends Token {
