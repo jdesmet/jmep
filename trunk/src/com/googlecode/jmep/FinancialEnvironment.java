@@ -29,8 +29,8 @@ import java.math.BigDecimal;
 public class FinancialEnvironment extends Environment {
   protected FinancialEnvironment() {
     super(Expression.OperationalMode.FINANCIAL);
-    BasicEnvironment.implementSimpleLongOperators(this);
-    BasicEnvironment.implementSimpleStringOperators(this);
+    BasicEnvironment.implementDefaultLong(this);
+    BasicEnvironment.implementDefaultString(this);
     
     // Register special Long-Long cases (because they can return Double)
     register(DIV,Long.class, Long.class, (Long t, Long u) -> { if (u != 0L && t%u == 0L) return t/u; return BigDecimal.valueOf(t).divide(BigDecimal.valueOf(u));} );

@@ -32,15 +32,25 @@ package com.googlecode.jmep;
  * investigation.
  * @author Jo Desmet
  */
-public class IllegalExpressionStateException extends ExpressionException {
+public class IllegalExpressionStateException extends IllegalStateException {
 	private static final long serialVersionUID = 1L;
+  private int position;
 
-  IllegalExpressionStateException(int    iPosition) {
-    super(iPosition,"Invalid State");
+  IllegalExpressionStateException(int position,String message,Throwable x) {
+    super("ERROR(@"+position+"): "+message,x);
+    this.position = position;
+  }
+  
+  IllegalExpressionStateException(int position) {
+    this(position,"Invalid State",null);
+  }
+  
+  IllegalExpressionStateException(int position,String message) {
+    this(position,message,null);
   }
   
   IllegalExpressionStateException() {
-    super (-1,"Invalid State");
+    this (-1,"Invalid State",null);
   }
 }
 

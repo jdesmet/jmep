@@ -21,15 +21,15 @@ import java.util.Objects;
 public class BasicEnvironment extends Environment {
   public BasicEnvironment () {
     super(Expression.OperationalMode.BASIC);
-    implementSimpleLongOperators(this);
-    implementSimpleStringOperators(this);
+    implementDefaultLong(this);
+    implementDefaultString(this);
+    implementDefaultDouble(this);
     
     // Register special Long-Long cases (because they can return Double)
     register(DIV,Long.class, Long.class, (Long t, Long u) -> { if (u != 0L && t%u == 0L) return t/u; return t.doubleValue()/u;} );
     register(POW,Long.class, Long.class, (t,u)-> {
-        if (u == 0) {
-          return 1L;
-        }
+        if (t == 1) return 1L;
+        if (u == 0) return 1L;
         if (u >= 0 && u < 5) {
           long returnValue = 1;
           for (int i = 0; i < u; i++) {
@@ -41,7 +41,7 @@ public class BasicEnvironment extends Environment {
     });
     
     // Register Double cases
-    register(POW,Double.class, Double.class, (t,u)->Math.pow(t, u));
+    register(POW,Double.class, Double.class, Math::pow);
     register(MUL,Double.class, Double.class, (t,u)->t * u);
     register(DIV,Double.class, Double.class, (t,u)->t / u);
     register(ADD,Double.class, Double.class, (t,u)->t + u);
@@ -63,7 +63,21 @@ public class BasicEnvironment extends Environment {
     register(Long.class, Double.class, (t) -> new Double(t));
   }
   
-  final static void implementSimpleLongOperators(Environment env) {
+  final static void implementDefaultDouble(Environment env) {
+    env.addConstant("e", Math.E);
+    env.addConstant("pi", Math.PI);
+    env.addFunction("sin", (Object [] p)->Math.sin(((Number)p[0]).doubleValue()));
+    env.addFunction("cos", (Object [] p)->Math.cos(((Number)p[0]).doubleValue()));
+    env.addFunction("exp", (Object [] p)->Math.exp(((Number)p[0]).doubleValue()));
+    env.addFunction("tan", (Object [] p)->Math.tan(((Number)p[0]).doubleValue()));
+    env.addFunction("abs", (Object [] p)->Math.abs(((Number)p[0]).doubleValue()));
+    env.addFunction("log", (Object [] p)->Math.log(((Number)p[0]).doubleValue()));
+    env.addFunction("floor", (Object [] p)->Math.floor(((Number)p[0]).doubleValue()));
+    env.addFunction("ceil", (Object [] p)->Math.ceil(((Number)p[0]).doubleValue()));
+    env.addFunction("round", (Object [] p)->Math.round(((Number)p[0]).doubleValue()));
+  }
+  
+  final static void implementDefaultLong(Environment env) {
     // Binary on Long-Long
     env.register(MOD,Long.class, Long.class, (t,u)->t % u);
     env.register(ADD,Long.class, Long.class, (t,u)->t + u);
@@ -87,7 +101,7 @@ public class BasicEnvironment extends Environment {
     env.register(INV,Long.class, (t)->~t);
   }
   
-  final static void implementSimpleStringOperators(Environment env) {
+  final static void implementDefaultString(Environment env) {
     env.register(MUL,String.class, Long.class, (String t, Long u) -> {
       if (u < 0) throw new IllegalArgumentException("Cannot repeat a string negative times");
       if (u == 0)  return "";
@@ -97,7 +111,7 @@ public class BasicEnvironment extends Environment {
       }
       return value;
     });
-    env.register(ADD,String.class, String.class, (t,u)->t.concat(u));
+    env.register(ADD,String.class, String.class, String::concat);
     env.register(LT,String.class, String.class, (t,u)->(t.compareTo(u) < 0 ? 1L : 0L));
     env.register(GT,String.class, String.class, (t,u)->(t.compareTo(u) > 0 ? 1L : 0L));
     env.register(LE,String.class, String.class, (t,u)->(t.compareTo(u) <= 0 ? 1L : 0L));

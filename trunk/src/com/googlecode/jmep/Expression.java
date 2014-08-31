@@ -23,9 +23,9 @@
 
 package com.googlecode.jmep;
 
-import com.googlecode.jmep.hooks.Constant;
-import com.googlecode.jmep.hooks.Variable;
-import com.googlecode.jmep.hooks.Function;
+import com.googlecode.jmep.function.Constant;
+import com.googlecode.jmep.function.Variable;
+import com.googlecode.jmep.function.Function;
 
 import java.util.LinkedList;
 import java.util.Iterator;
@@ -309,7 +309,7 @@ public class Expression {
         }
         BigDecimal bd = new BigDecimal(sb.toString()).stripTrailingZeros();
         if (bd.scale() <= 0 && bd.compareTo(BigDecimal.valueOf((long)Long.MAX_VALUE)) <= 0 && bd.compareTo(BigDecimal.valueOf(Long.MIN_VALUE)) >= 0) {
-          return new Long(bd.longValueExact());
+          return bd.longValueExact();
         }
         /*
          * It is important to depend on BigDecimal to do the string-to-number conversion for you. It is smarter
@@ -322,7 +322,7 @@ public class Expression {
         if (environment.getOperationalMode() == OperationalMode.FINANCIAL) {
           return bd;
         }
-        return new Double(bd.doubleValue());
+        return bd.doubleValue();
     }
     
     private String parseString(StringCharacterIterator iterString) throws ExpressionException {
@@ -438,12 +438,10 @@ public class Expression {
                     /* it is a variable */
                     Variable variable = this.environment.getVariable(identifier);
                     if (variable == null) throw new UndefinedVariableException(identifierPosition, identifier);
-                    else if (variable instanceof Constant) {
-                      Object value = variable.evaluate();
-                      if (value instanceof Integer) value = new Long((Integer)value);
-                      this.tokenList.add(new ValueToken(value,identifierPosition));
-                    } else
-                      this.tokenList.add(new VariableToken(identifier,variable,identifierPosition));
+                    else if (variable.isDeferrable()) 
+                      this.tokenList.add(new VariableToken(identifier,variable,identifierPosition)); 
+                    else
+                      this.tokenList.add(new ValueToken(variable.get(),identifierPosition));
                     continue;
                 }
             }
@@ -729,7 +727,7 @@ public class Expression {
                         value = oFNCToken.evaluate(parameters);
                     }
                     else
-                        value = oFNCToken.evaluate(null);
+                        value = oFNCToken.evaluate(new Object [0]);
                     resultStack.push(value);
                 }
             catch (NoSuchElementException x) {
