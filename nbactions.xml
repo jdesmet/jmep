@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>test</actionName>
+            <packagings>
+                <packaging>*</packaging>
+            </packagings>
+            <goals>
+                <goal>test</goal>
+            </goals>
+            <properties>
+                <skipTests>false</skipTests>
+            </properties>
+        </action>
+        <action>
+            <actionName>CUSTOM-Site (generate reports)</actionName>
+            <displayName>Site (generate reports)</displayName>
+            <goals>
+                <goal>site</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-local-deploy-snapshot</actionName>
+            <displayName>Local: Deploy snapshot</displayName>
+            <goals>
+                <goal>deploy</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-deploy</actionName>
+            <displayName>Deploy</displayName>
+            <goals>
+                <goal>deploy</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>test.single</actionName>
+            <packagings>
+                <packaging>*</packaging>
+            </packagings>
+            <goals>
+                <goal>test-compile</goal>
+                <goal>surefire:test</goal>
+            </goals>
+            <properties>
+                <test>${packageClassName}</test>
+                <skipTests>false</skipTests>
+            </properties>
+        </action>
+    </actions>
